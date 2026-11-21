@@ -20,6 +20,13 @@ It was always mine — waiting to be turned."""
 
 
 def main() -> None:
+    # Self-gate, mirroring the competition gate: 1-280 Unicode code
+    # points, not only whitespace. Fail loudly instead of writing an
+    # invalid entry.
+    if not 1 <= len(POEM) <= 280:
+        raise SystemExit(f"poem is {len(POEM)} chars, must be 1-280")
+    if not POEM.strip():
+        raise SystemExit("poem is only whitespace")
     out_dir = os.environ.get("MAKEFUN_OUTPUT_DIR", "/output")
     os.makedirs(out_dir, exist_ok=True)
     with open(os.path.join(out_dir, "entry.txt"), "w", encoding="utf-8") as f:
